@@ -55,23 +55,19 @@ class Archer(Character):
     def __init__(self, name):
         super().__init__(name, health=110, attack_power=15)
 
-
-def special_ability(self, opponent):
-    opponent.health -= self.attack_power * 2
-    print(
-        f"Uses Rain of Arrows on {opponent.name} for {self.attack_power * 2} damage!")
+    def special_ability(self, opponent):
+        opponent.health -= self.attack_power * 2
+        print(f"Uses Rain of Arrows on {opponent.name} for {self.attack_power * 2} damage!")
 
 
 class Paladin(Character):
-    def __init__(self, name):
-        super().__init__(name, health=160, attack_power=45)
+    class Paladin(Character):
+        def __init__(self, name):
+            super().__init__(name, health=160, attack_power=45)
 
-
-def special_ability(self, opponent):
-    opponent.health -= self.attack_power * 2
-    print(
-        f"Uses Shield Bash on {opponent.name} for {self.attack_power * 2} damage!")
-# EvilWizard class (inherits from Character)
+    def special_ability(self, opponent):
+        opponent.health -= self.attack_power * 2
+        print(f"Uses Shield Bash on {opponent.name} for {self.attack_power * 2} damage!")
 
 
 class EvilWizard(Character):
@@ -121,15 +117,12 @@ def battle(player, wizard):
         choice = input("Choose an action: ")
         if choice == '1':
             player.attack(wizard)
+        if choice == '1':
+            player.attack(wizard)
         elif choice == '2':
-            if hasattr(player, 'special_ability'):
-                player.special_ability(wizard)
-            else:
-                print(f"{player.name} has no special ability.")
+            player.special_ability(wizard)
         elif choice == '3':
             player.heal()
-        elif choice == '4':
-            player.display_stats()
             player.display_stats()
         else:
             print("Invalid choice. Try again.")
