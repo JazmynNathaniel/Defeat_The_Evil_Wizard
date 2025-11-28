@@ -31,7 +31,7 @@ class Character:
 # Warrior class (inherits from Character)
 class Warrior(Character):
     def __init__(self, name):
-        super().__init__(name, health=140, attack_power=25)
+        super().__init__(name, health=140, attack_power=35)
 
     def special_ability(self, opponent):
         opponent.health -= self.attack_power * 2
