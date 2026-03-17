@@ -78,7 +78,7 @@ Choose your character class:
 3. Archer
 4. Paladin
 
-Enter your character's name: Aria
+Enter your character's name:
 
 --- Your Turn ---
 1. Attack
@@ -98,4 +98,4 @@ Items system (potions, weapons, armor)
 
 🏆 Author
 
-Created by [Your Name] as a Python OOP practice project.
+Created by Jaz as a Python OOP practice project.
