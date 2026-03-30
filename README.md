@@ -1,101 +1,79 @@
-🧙‍♂️ Defeat the Evil Wizard — Python OOP Game
+# Defeat the Evil Wizard
 
-A turn-based, text-based battle game built using Object-Oriented Programming (OOP) concepts in Python.
-Create a hero, use special abilities, heal when needed, and defeat the Evil Wizard before he overpowers you!
+A small turn-based command-line battle game built as Python OOP practice.
 
-🎮 Features
+## Current Structure
 
-Four playable character classes:
+```text
+Defeat_The_Evil_Wizard/
+|-- __init__.py
+|-- character_creation.py
+|-- characters.py
+|-- defeat_wizard.py
+`-- game.py
+tests/
+`-- test_game.py
+README.md
+```
 
-Warrior – Strong melee fighter
+## How to Run
 
-Mage – Powerful spellcaster
+From the repository root:
 
-Archer – Agile ranged attacker
+```bash
+python Defeat_The_Evil_Wizard/defeat_wizard.py
+```
 
-Paladin – Holy warrior with high defense
+Or run it as a package:
 
-Unique abilities for each class
+```bash
+python -m Defeat_The_Evil_Wizard.defeat_wizard
+```
 
-Evil Wizard enemy with health regeneration
+Run the test suite with:
 
-Turn-based combat system
+```bash
+python -m unittest discover -s tests
+```
 
-Healing system (player can restore health)
+## Gameplay
 
-Victory and defeat messages
+Choose one of four classes:
 
-🧱 Project Structure
-project/
-│
-├── main.py                 # Entry point of the game
-├── README.md               # Project documentation
-└── (your character classes inside main.py)
+- Warrior
+- Mage
+- Archer
+- Paladin
 
-🧠 Concepts Used
+Each turn you can:
 
-This project demonstrates:
+- Attack
+- Use a special ability
+- Heal
+- View stats
 
-Inheritance: All classes inherit from the base Character class
+The Evil Wizard regenerates health before attacking back, so the fight is a damage race.
 
-Encapsulation: Character stats and behaviors kept inside class definitions
+## Refactor Notes
 
-Game loop logic: While-loop turn system
+The code is now split into:
 
-User interaction: Input-based menu choices
+- `character_creation.py` for class selection and player construction
+- `characters.py` for character definitions and combat behavior
+- `game.py` for the `BattleEngine` and battle loop orchestration
+- `defeat_wizard.py` as the CLI entry point
+- `tests/test_game.py` for regression coverage around creation and combat flow
 
-🚀 How to Play
+This keeps the game logic easier to read and makes future changes, such as adding items or enemies, less painful.
 
-Run the game:
+## Requirements
 
-python main.py
+- Python 3.8 or higher
+- No external libraries needed
 
+## Future Improvements
 
-Choose your hero class
-
-On your turn, select:
-
-1 – Attack
-
-2 – Use Special Ability
-
-3 – Heal
-
-4 – View Stats
-
-Survive the wizard’s attacks and defeat him before your health hits zero.
-
-🛠️ Requirements
-
-Python 3.8 or higher
-
-No external libraries needed.
-
-📌 Example Gameplay
-Choose your character class:
-1. Warrior
-2. Mage
-3. Archer
-4. Paladin
-
-Enter your character's name:
-
---- Your Turn ---
-1. Attack
-2. Use Special Ability
-3. Heal
-4. View Stats
-
-📦 Future Improvements (Optional)
-
-Random damage and critical hits
-
-More classes (Assassin, Necromancer, etc.)
-
-Wizard summons minions
-
-Items system (potions, weapons, armor)
-
-🏆 Author
-
-Created by Jaz as a Python OOP practice project.
+- Random damage and critical hits
+- More classes
+- Wizard summons minions
+- Items system
