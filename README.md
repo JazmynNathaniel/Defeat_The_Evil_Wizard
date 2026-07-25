@@ -38,21 +38,35 @@ python -m unittest discover -s tests
 
 ## Gameplay
 
-Choose one of four classes:
+Choose one of four classes, each with a distinct stat profile:
 
-- Warrior
-- Mage
-- Archer
-- Paladin
+| Class   | Health | Attack | Defense | Playstyle              |
+| ------- | ------ | ------ | ------- | ---------------------- |
+| Warrior | 140    | 35     | 10      | Balanced bruiser       |
+| Mage    | 100    | 50     | 0       | Glass cannon           |
+| Archer  | 110    | 40     | 5       | Skirmisher             |
+| Paladin | 160    | 25     | 15      | Tank — slow but sturdy |
 
 Each turn you can:
 
 - Attack
 - Use a special ability
-- Heal
+- Heal (drinks a potion)
 - View stats
 
-The Evil Wizard regenerates health before attacking back, so the fight is a damage race.
+Defense reduces incoming damage flat, so armor matters against the wizard's attacks.
+
+Healing is limited: each player carries **5 potions**, and every heal drinks
+one (healing at full health doesn't waste a potion, and trying to heal with an
+empty bag doesn't cost your turn). Once they're gone, it's do-or-die.
+
+Special abilities charge up: land **5 regular attacks** to ready your special,
+which deals double damage and resets the charge. The menu shows your current
+charge (`2. Use Special Ability [3/5]`), and picking it before it's ready
+doesn't cost your turn.
+
+The Evil Wizard (220 HP, 5 defense) regenerates health before attacking back,
+so the fight is a damage race.
 
 ## Refactor Notes
 

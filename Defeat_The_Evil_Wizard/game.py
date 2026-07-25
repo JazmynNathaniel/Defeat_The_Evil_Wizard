@@ -3,10 +3,10 @@ from typing import List
 
 try:
     from .character_creation import build_character, get_class_menu_lines
-    from .characters import Character, EvilWizard
+    from .characters import MAX_POTIONS, SPECIAL_CHARGE_REQUIRED, Character, EvilWizard
 except ImportError:
     from character_creation import build_character, get_class_menu_lines
-    from characters import Character, EvilWizard
+    from characters import MAX_POTIONS, SPECIAL_CHARGE_REQUIRED, Character, EvilWizard
 
 
 @dataclass
@@ -21,11 +21,15 @@ class BattleEngine:
     wizard: EvilWizard
 
     def get_turn_menu_lines(self) -> List[str]:
+        if self.player.special_ready:
+            special_status = "READY!"
+        else:
+            special_status = f"{self.player.special_charge}/{SPECIAL_CHARGE_REQUIRED}"
         return [
             "\n--- Your Turn ---",
             "1. Attack",
-            "2. Use Special Ability",
-            "3. Heal",
+            f"2. Use Special Ability [{special_status}]",
+            f"3. Heal [{self.player.potions} potions]",
             "4. View Stats",
         ]
 
@@ -38,8 +42,21 @@ class BattleEngine:
         if normalized_choice == "1":
             return TurnResult(turn_consumed=True, messages=self.player.attack(self.wizard).messages)
         if normalized_choice == "2":
-            return TurnResult(turn_consumed=True, messages=self.player.special_ability(self.wizard).messages)
+            if not self.player.special_ready:
+                return TurnResult(
+                    turn_consumed=False,
+                    messages=[
+                        f"{self.player.name}'s special ability isn't charged yet "
+                        f"({self.player.special_charge}/{SPECIAL_CHARGE_REQUIRED} attacks landed)."
+                    ],
+                )
+            return TurnResult(turn_consumed=True, messages=self.player.use_special(self.wizard).messages)
         if normalized_choice == "3":
+            if self.player.potions <= 0:
+                return TurnResult(
+                    turn_consumed=False,
+                    messages=[f"{self.player.name} is out of potions!"],
+                )
             return TurnResult(turn_consumed=True, messages=self.player.heal().messages)
         if normalized_choice == "4":
             return TurnResult(turn_consumed=False, messages=self.player.display_stats().messages)
@@ -68,21 +85,13 @@ class BattleEngine:
     def handle_player_turn(self) -> bool:
         print_messages(self.get_turn_menu_lines())
         choice = input("Choose an action: ")
-        result = self.resolve_turn(choice)
+        result = self.run_round(choice)
         print_messages(result.messages)
         return result.turn_consumed
 
     def battle(self) -> None:
         while not self.is_over():
-            turn_consumed = self.handle_player_turn()
-
-            if self.wizard.health <= 0:
-                break
-
-            if not turn_consumed:
-                continue
-
-            print_messages(self.apply_wizard_turn())
+            self.handle_player_turn()
 
         if self.wizard.health <= 0:
             print(f"The wizard {self.wizard.name} has been defeated by {self.player.name}!")
